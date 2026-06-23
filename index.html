@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manish Patel — Graphic Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #0D0D0D;
+    --surface: #1A1A1A;
+    --card:    #222222;
+    --warm:    #F5F0E8;
+    --gold:    #C8B89A;
+    --orange:  #E8410A;
+    --muted:   #6B6560;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--warm);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 180px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    mix-blend-mode: normal;
+  }
+
+  nav::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,13,13,0.9) 0%, transparent 100%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--warm);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--warm); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: -0.04em;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(160px, 22vw, 320px);
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,184,154,0.08);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 9vw, 128px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-descriptor {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 520px;
+  }
+
+  .hero-descriptor::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--orange);
+    flex-shrink: 0;
+  }
+
+  .hero-descriptor p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--gold);
+    font-weight: 300;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 80px;
+    right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollLine 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.6); }
+  }
+
+  /* ── SECTION CHROME ── */
+  section {
+    padding: 100px 48px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 56px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    display: block;
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: var(--orange);
+    opacity: 0.4;
+  }
+
+  /* ── WORK / CASE STUDIES ── */
+  #work { background: var(--surface); }
+
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .work-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .work-title em { font-style: italic; color: var(--gold); }
+
+  .work-count {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding-bottom: 8px;
+  }
+
+  /* Shelf scroll */
+  .shelf-track-wrapper {
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .shelf-track-wrapper:active { cursor: grabbing; }
+
+  .shelf-track {
+    display: flex;
+    gap: 24px;
+    padding-bottom: 32px;
+    width: max-content;
+    transition: transform 0.05s linear;
+  }
+
+  .project-card {
+    width: 340px;
+    flex-shrink: 0;
+    background: var(--card);
+    border: 1px solid rgba(200,184,154,0.08);
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .project-card:hover { border-color: rgba(200,184,154,0.3); }
+
+  /* Kraft paper texture on image area */
+  .card-image {
+    width: 100%;
+    height: 240px;
+    background: #2C2620;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(200,184,154,0.03) 2px,
+        rgba(200,184,154,0.03) 4px
+      );
+  }
+
+  .card-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(200,184,154,0.35);
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 24px;
+    line-height: 1.6;
+    z-index: 1;
+  }
+
+  /* Lift reveal on hover */
+  a.card-overlay { text-decoration: none; cursor: pointer; }
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(232,65,10,0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .project-card:hover .card-overlay { opacity: 1; }
+
+  .card-overlay span {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm);
+  }
+
+  .card-overlay-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(245,240,232,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--warm);
+    font-size: 18px;
+  }
+
+  .card-body {
+    padding: 24px 28px 28px;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(200,184,154,0.25);
+    padding: 4px 10px;
+  }
+
+  .card-client {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--warm);
+  }
+
+  /* Shelf nav dots */
+  .shelf-nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 40px;
+    justify-content: center;
+  }
+
+  .shelf-dot {
+    width: 24px;
+    height: 2px;
+    background: var(--muted);
+    cursor: pointer;
+    transition: background 0.2s, width 0.2s;
+  }
+
+  .shelf-dot.active {
+    background: var(--orange);
+    width: 40px;
+  }
+
+  /* ── SHELF ARROWS ── */
+  .shelf-outer {
+    position: relative;
+  }
+
+  .shelf-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(calc(-50% - 16px));
+    z-index: 10;
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(200,184,154,0.25);
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(8px);
+    color: var(--warm);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.25s ease, border-color 0.2s, background 0.2s, color 0.2s;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .shelf-outer:hover .shelf-arrow:not(.disabled) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .shelf-arrow:hover {
+    border-color: var(--orange);
+    background: rgba(232,65,10,0.12);
+    color: var(--orange);
+  }
+
+  .shelf-arrow.disabled {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  .shelf-arrow-prev { left: 0; }
+  .shelf-arrow-next { right: 0; }
+
+  /* ── EXPERTISE ── */
+  #expertise { background: var(--black); }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: rgba(200,184,154,0.08);
+    border: 1px solid rgba(200,184,154,0.08);
+    margin-top: 16px;
+  }
+
+  .expertise-item {
+    background: var(--black);
+    padding: 40px 36px;
+    transition: background 0.3s;
+  }
+
+  .expertise-item:hover { background: var(--surface); }
+
+  .expertise-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .expertise-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--warm);
+  }
+
+  .expertise-desc {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── BRANDS ── */
+  #brands { background: var(--surface); }
+
+  .brands-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 36px);
+    font-weight: 300;
+    line-height: 1.4;
+    max-width: 640px;
+    margin-bottom: 64px;
+  }
+
+  .brands-intro em { font-style: italic; color: var(--gold); }
+
+  .brand-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-top: 1px solid rgba(200,184,154,0.1);
+  }
+
+  .brand-item {
+    flex: 1 1 200px;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(200,184,154,0.1);
+    border-right: 1px solid rgba(200,184,154,0.1);
+    padding-right: 32px;
+    margin-right: 32px;
+  }
+
+  .brand-item:last-child { border-right: none; }
+
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--warm);
+    margin-bottom: 6px;
+  }
+
+  .brand-role {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4.5vw, 60px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+
+  .about-headline em { font-style: italic; color: var(--gold); }
+
+  .about-body {
+    font-size: 14px;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.65);
+    margin-bottom: 40px;
+  }
+
+  .about-cta {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm);
+    border: 1px solid rgba(245,240,232,0.3);
+    padding: 14px 28px;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .about-cta:hover {
+    border-color: var(--orange);
+    background: rgba(232,65,10,0.08);
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(200,184,154,0.08);
+    border: 1px solid rgba(200,184,154,0.08);
+  }
+
+  .stat-cell {
+    background: var(--black);
+    padding: 36px 32px;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--warm);
+    margin-bottom: 8px;
+  }
+
+  .stat-number sup {
+    font-size: 24px;
+    color: var(--orange);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--surface);
+    text-align: center;
+    padding: 120px 48px;
+  }
+
+  .contact-pre {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 24px;
+  }
+
+  .contact-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 8vw, 112px);
+    font-weight: 300;
+    line-height: 0.95;
+    margin-bottom: 48px;
+  }
+
+  .contact-headline em { font-style: italic; color: var(--gold); }
+
+  .contact-email {
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--warm);
+    text-decoration: none;
+    border-bottom: 1px solid var(--orange);
+    padding-bottom: 4px;
+    transition: color 0.2s;
+  }
+
+  .contact-email:hover { color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    padding: 28px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(200,184,154,0.08);
+  }
+
+  footer p {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 72px 24px; }
+    .hero { padding: 0 24px 64px; }
+    .hero-scroll { display: none; }
+    #about {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 72px 24px;
+    }
+    .work-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  /* ── FADE-IN ON SCROLL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">M. Patel</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#brands">Clients</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text" aria-hidden="true">Design</div>
+  <p class="hero-eyebrow">Senior Graphic Designer · London</p>
+  <h1 class="hero-name">Manish<br><em>Patel</em></h1>
+  <div class="hero-descriptor">
+    <p>Retail, print & packaging design with nearly two decades across the UK's most recognised brands.</p>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">Scroll</div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-label">Selected Work</div>
+  <div class="work-header reveal">
+    <h2 class="work-title">Crafted for<br><em>shelves & screens</em></h2>
+    <span class="work-count">6 Projects</span>
+  </div>
+
+  <div class="shelf-outer" id="shelfOuter">
+  <button class="shelf-arrow shelf-arrow-prev disabled" id="shelfPrev" aria-label="Previous projects">&#8592;</button>
+  <button class="shelf-arrow shelf-arrow-next" id="shelfNext" aria-label="Next projects">&#8594;</button>
+
+  <div class="shelf-track-wrapper" id="shelf">
+    <div class="shelf-track" id="shelfTrack">
+
+      <div class="project-card reveal">
+        <div class="card-image">
+          <p class="card-placeholder">Insert project image here<br>Recommended: 680×480px</p>
+          <a href="case-studies/mountain-warehouse.html" class="card-overlay">
+            <div class="card-overlay-icon">→</div>
+            <span>View Case Study</span>
+          </a>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag">Packaging</span><span class="tag">Retail</span></div>
+          <p class="card-client">Mountain Warehouse</p>
+          <h3 class="card-title">Seasonal Product Range Packaging</h3>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="card-image">
+          <p class="card-placeholder">Insert project image here<br>Recommended: 680×480px</p>
+          <div class="card-overlay">
+            <div class="card-overlay-icon">→</div>
+            <span>View Case Study</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag">Print</span><span class="tag">Brand</span></div>
+          <p class="card-client">Selfridges</p>
+          <h3 class="card-title">In-Store Campaign & Print Collateral</h3>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="card-image">
+          <p class="card-placeholder">Insert project image here<br>Recommended: 680×480px</p>
+          <div class="card-overlay">
+            <div class="card-overlay-icon">→</div>
+            <span>View Case Study</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag">Packaging</span><span class="tag">Identity</span></div>
+          <p class="card-client">Robert Dyas</p>
+          <h3 class="card-title">Own-Brand Product Packaging System</h3>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="card-image">
+          <p class="card-placeholder">Insert project image here<br>Recommended: 680×480px</p>
+          <div class="card-overlay">
+            <div class="card-overlay-icon">→</div>
+            <span>View Case Study</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag">Retail</span><span class="tag">Print</span></div>
+          <p class="card-client">WHSmith</p>
+          <h3 class="card-title">Point-of-Sale & Promotional Print</h3>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="card-image">
+          <p class="card-placeholder">Insert project image here<br>Recommended: 680×480px</p>
+          <div class="card-overlay">
+            <div class="card-overlay-icon">→</div>
+            <span>View Case Study</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag">Packaging</span><span class="tag">Retail</span></div>
+          <p class="card-client">Debenhams</p>
+          <h3 class="card-title">Gifting & Seasonal Packaging Suite</h3>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="card-image">
+          <p class="card-placeholder">Insert project image here<br>Recommended: 680×480px</p>
+          <div class="card-overlay">
+            <div class="card-overlay-icon">→</div>
+            <span>View Case Study</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag">Art Direction</span><span class="tag">Print</span></div>
+          <p class="card-client">Personal Project</p>
+          <h3 class="card-title">Editorial Identity & Type Exploration</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div><!-- /shelf-outer -->
+
+  <div class="shelf-nav" id="shelfNav">
+    <div class="shelf-dot active" data-index="0"></div>
+    <div class="shelf-dot" data-index="1"></div>
+    <div class="shelf-dot" data-index="2"></div>
+    <div class="shelf-dot" data-index="3"></div>
+    <div class="shelf-dot" data-index="4"></div>
+    <div class="shelf-dot" data-index="5"></div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="section-label">What I Do</div>
+  <div class="expertise-grid">
+    <div class="expertise-item reveal">
+      <span class="expertise-icon">□</span>
+      <h3 class="expertise-title">Packaging Design</h3>
+      <p class="expertise-desc">Structural and surface design for retail packaging — from concept through to print-ready artwork. Experience across FMCG, gifting, and own-brand ranges.</p>
+    </div>
+    <div class="expertise-item reveal">
+      <span class="expertise-icon">◱</span>
+      <h3 class="expertise-title">Retail Print</h3>
+      <p class="expertise-desc">In-store campaigns, POS, signage, and promotional print. Comfortable working at scale across multi-site rollouts with tight production timelines.</p>
+    </div>
+    <div class="expertise-item reveal">
+      <span class="expertise-icon">◈</span>
+      <h3 class="expertise-title">Brand Identity</h3>
+      <p class="expertise-desc">Logo, typography, colour systems, and brand guidelines. Applied across large retail organisations where consistency across touchpoints is non-negotiable.</p>
+    </div>
+    <div class="expertise-item reveal">
+      <span class="expertise-icon">◎</span>
+      <h3 class="expertise-title">Art Direction</h3>
+      <p class="expertise-desc">Visual concept development and creative direction for campaigns, lookbooks, and brand communications at senior level.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section id="brands">
+  <div class="section-label">Experience</div>
+  <p class="brands-intro reveal">Nearly <em>two decades</em> designing for the brands that shape the UK high street.</p>
+
+  <div class="brand-list">
+    <div class="brand-item reveal">
+      <p class="brand-name">Selfridges</p>
+      <p class="brand-role">Senior Designer</p>
+    </div>
+    <div class="brand-item reveal">
+      <p class="brand-name">Debenhams</p>
+      <p class="brand-role">Senior Designer</p>
+    </div>
+    <div class="brand-item reveal">
+      <p class="brand-name">WHSmith</p>
+      <p class="brand-role">Graphic Designer</p>
+    </div>
+    <div class="brand-item reveal">
+      <p class="brand-name">Mountain Warehouse</p>
+      <p class="brand-role">Senior Designer</p>
+    </div>
+    <div class="brand-item reveal">
+      <p class="brand-name">Robert Dyas</p>
+      <p class="brand-role">Graphic Designer</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div>
+    <div class="section-label">About</div>
+    <h2 class="about-headline reveal">Design that<br><em>earns its place</em><br>on the shelf.</h2>
+    <p class="about-body reveal">I'm a London-based senior graphic designer with close to two decades of experience across retail, packaging, and print. My work has shaped the visual identity of some of the UK's most recognised brands — from department stores to outdoor specialists.</p>
+    <p class="about-body reveal">I work best where design has to perform: where a package needs to stand out in a crowded aisle, where a campaign has to travel across dozens of formats, or where a brand system needs to hold together at scale.</p>
+    <a href="mailto:hello@manishpatel.co.uk" class="about-cta reveal">Get in touch</a>
+  </div>
+  <div class="about-stats reveal">
+    <div class="stat-cell">
+      <p class="stat-number">18<sup>+</sup></p>
+      <p class="stat-label">Years of experience</p>
+    </div>
+    <div class="stat-cell">
+      <p class="stat-number">5<sup>+</sup></p>
+      <p class="stat-label">Major retail brands</p>
+    </div>
+    <div class="stat-cell">
+      <p class="stat-number">UK</p>
+      <p class="stat-label">Based in London, Harrow</p>
+    </div>
+    <div class="stat-cell">
+      <p class="stat-number">∞</p>
+      <p class="stat-label">Revisions survived</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="contact-pre">Let's work together</p>
+  <h2 class="contact-headline reveal">Got a<br><em>brief?</em></h2>
+  <a href="mailto:hello@manishpatel.co.uk" class="contact-email">hello@manishpatel.co.uk</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Manish Patel</p>
+  <p>Senior Graphic Designer · London</p>
+</footer>
+
+<script>
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── DRAG-TO-SCROLL SHELF ──
+  const wrapper  = document.getElementById('shelf');
+  const track    = document.getElementById('shelfTrack');
+  const dots     = document.querySelectorAll('.shelf-dot');
+  const btnPrev  = document.getElementById('shelfPrev');
+  const btnNext  = document.getElementById('shelfNext');
+  const cardW    = 340 + 24; // card width + gap
+  const totalCards = 6;
+
+  let isDragging = false, startX = 0, scrollStart = 0;
+
+  wrapper.addEventListener('mousedown', e => {
+    isDragging = true;
+    startX = e.pageX;
+    scrollStart = wrapper.scrollLeft;
+    wrapper.style.cursor = 'grabbing';
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    const dx = e.pageX - startX;
+    wrapper.scrollLeft = scrollStart - dx;
+    updateUI();
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+    wrapper.style.cursor = 'grab';
+  });
+
+  // Touch support
+  wrapper.addEventListener('touchstart', e => {
+    startX = e.touches[0].pageX;
+    scrollStart = wrapper.scrollLeft;
+  }, { passive: true });
+
+  wrapper.addEventListener('touchmove', e => {
+    const dx = e.touches[0].pageX - startX;
+    wrapper.scrollLeft = scrollStart - dx;
+    updateUI();
+  }, { passive: true });
+
+  // Arrow buttons
+  btnPrev.addEventListener('click', () => {
+    const idx = Math.round(wrapper.scrollLeft / cardW);
+    const target = Math.max(0, idx - 1);
+    wrapper.scrollTo({ left: target * cardW, behavior: 'smooth' });
+  });
+
+  btnNext.addEventListener('click', () => {
+    const idx = Math.round(wrapper.scrollLeft / cardW);
+    const target = Math.min(totalCards - 1, idx + 1);
+    wrapper.scrollTo({ left: target * cardW, behavior: 'smooth' });
+  });
+
+  function updateUI() {
+    const idx = Math.round(wrapper.scrollLeft / cardW);
+    // Dots
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    // Arrows
+    btnPrev.classList.toggle('disabled', idx === 0);
+    btnNext.classList.toggle('disabled', idx >= totalCards - 1);
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.index);
+      wrapper.scrollTo({ left: idx * cardW, behavior: 'smooth' });
+    });
+  });
+
+  wrapper.addEventListener('scroll', updateUI, { passive: true });
+</script>
+</body>
+</html>
