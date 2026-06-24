@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mountain Warehouse — Manish Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #0D0D0D;
+    --surface: #1A1A1A;
+    --card:    #222222;
+    --warm:    #F5F0E8;
+    --gold:    #C8B89A;
+    --orange:  #E8410A;
+    --muted:   #6B6560;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--warm);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 180px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+  }
+
+  nav::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,13,13,0.92) 0%, transparent 100%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--warm);
+    text-decoration: none;
+  }
+
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--warm); }
+
+  .nav-back::before {
+    content: '←';
+    font-size: 14px;
+    transition: transform 0.2s;
+  }
+
+  .nav-back:hover::before { transform: translateX(-4px); }
+
+  /* ── HERO ── */
+  .cs-hero {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 72px;
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  /* Large hero image placeholder */
+  .cs-hero-image {
+    position: absolute;
+    inset: 0;
+    background: #1C1F1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Subtle topographic lines — nod to Mountain Warehouse outdoors */
+  .cs-hero-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-radial-gradient(
+        ellipse at 60% 40%,
+        transparent 0px,
+        transparent 28px,
+        rgba(200,184,154,0.04) 29px,
+        rgba(200,184,154,0.04) 30px
+      ),
+      repeating-radial-gradient(
+        ellipse at 60% 40%,
+        transparent 0px,
+        transparent 58px,
+        rgba(200,184,154,0.03) 59px,
+        rgba(200,184,154,0.03) 60px
+      );
+  }
+
+  .cs-hero-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: rgba(200,184,154,0.3);
+    letter-spacing: 0.08em;
+    text-align: center;
+    z-index: 1;
+    line-height: 1.8;
+  }
+
+  /* Dark gradient so text is readable over image */
+  .cs-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 65%;
+    background: linear-gradient(to top, rgba(13,13,13,0.95) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .cs-hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cs-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cs-eyebrow::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--orange);
+  }
+
+  .cs-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 7vw, 96px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+
+  .cs-title em { font-style: italic; color: var(--gold); }
+
+  .cs-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .cs-meta-item {}
+
+  .cs-meta-label {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .cs-meta-value {
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── OVERVIEW ── */
+  .cs-overview {
+    padding: 96px 48px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+    border-bottom: 1px solid rgba(200,184,154,0.08);
+  }
+
+  .overview-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+    padding-top: 6px;
+  }
+
+  .overview-right {}
+
+  .overview-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 300;
+    line-height: 1.25;
+    margin-bottom: 28px;
+    color: var(--warm);
+  }
+
+  .overview-headline em { font-style: italic; color: var(--gold); }
+
+  .overview-body {
+    font-size: 15px;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.65);
+    max-width: 600px;
+  }
+
+  /* ── DELIVERABLES ROW ── */
+  .cs-deliverables {
+    padding: 64px 48px;
+    display: flex;
+    gap: 1px;
+    background: rgba(200,184,154,0.08);
+    border-bottom: 1px solid rgba(200,184,154,0.08);
+  }
+
+  .deliverable {
+    flex: 1;
+    background: var(--black);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background 0.25s;
+  }
+
+  .deliverable:hover { background: var(--surface); }
+
+  .deliverable-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: rgba(200,184,154,0.2);
+    line-height: 1;
+  }
+
+  .deliverable-title {
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--warm);
+    font-weight: 400;
+  }
+
+  .deliverable-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── KEY VISUALS ── */
+  .cs-visuals {
+    padding: 96px 48px;
+    background: var(--surface);
+  }
+
+  .visuals-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+  }
+
+  .visuals-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 300;
+    color: var(--warm);
+  }
+
+  .visuals-title em { font-style: italic; color: var(--gold); }
+
+  .visuals-count {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding-bottom: 6px;
+  }
+
+  /* Masonry-style grid */
+  .visuals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+
+  .visual-cell {
+    background: var(--card);
+    border: 1px solid rgba(200,184,154,0.07);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s;
+  }
+
+  .visual-cell:hover { border-color: rgba(200,184,154,0.25); }
+
+  /* First cell spans full width — hero visual */
+  .visual-cell.full {
+    grid-column: 1 / -1;
+    height: 440px;
+  }
+
+  .visual-cell.half {
+    height: 300px;
+  }
+
+  .visual-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(200,184,154,0.28);
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 32px;
+    line-height: 1.7;
+    z-index: 1;
+  }
+
+  /* Topographic texture on visual cells */
+  .visual-cell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 3px,
+      rgba(200,184,154,0.025) 3px,
+      rgba(200,184,154,0.025) 4px
+    );
+  }
+
+  /* Caption strip */
+  .visual-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 14px 20px;
+    background: rgba(13,13,13,0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .visual-cell:hover .visual-caption { transform: translateY(0); }
+
+  .caption-text {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+  }
+
+  .caption-tag {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid rgba(200,184,154,0.2);
+    padding: 3px 8px;
+  }
+
+  /* ── OUTCOME / PULL QUOTE ── */
+  .cs-outcome {
+    padding: 96px 48px;
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    border-top: 1px solid rgba(200,184,154,0.08);
+  }
+
+  .outcome-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--gold);
+    border-left: 2px solid var(--orange);
+    padding-left: 32px;
+  }
+
+  .outcome-right {}
+
+  .outcome-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+
+  .outcome-body {
+    font-size: 14px;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 32px;
+  }
+
+  .outcome-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .outcome-tag {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(200,184,154,0.25);
+    padding: 6px 14px;
+  }
+
+  /* ── NEXT PROJECT ── */
+  .cs-next {
+    padding: 80px 48px;
+    background: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(200,184,154,0.08);
+    text-decoration: none;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+
+  .cs-next:hover { background: var(--card); }
+
+  .next-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .next-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 300;
+    color: var(--warm);
+  }
+
+  .next-title em { font-style: italic; color: var(--gold); }
+
+  .next-arrow {
+    font-size: 32px;
+    color: var(--orange);
+    transition: transform 0.3s;
+  }
+
+  .cs-next:hover .next-arrow { transform: translateX(8px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    padding: 28px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(200,184,154,0.08);
+  }
+
+  footer p {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .cs-hero { padding: 0 24px 56px; min-height: 70vh; }
+    .cs-overview { grid-template-columns: 1fr; gap: 24px; padding: 64px 24px; }
+    .cs-deliverables { flex-direction: column; padding: 0; }
+    .cs-visuals { padding: 64px 24px; }
+    .visuals-grid { grid-template-columns: 1fr; }
+    .visual-cell.full { height: 280px; }
+    .visual-cell.half { height: 220px; }
+    .cs-outcome { grid-template-columns: 1fr; gap: 48px; padding: 64px 24px; }
+    .cs-next { padding: 48px 24px; }
+    footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">M. Patel</a>
+  <a href="../index.html#work" class="nav-back">All Work</a>
+</nav>
+
+<!-- HERO -->
+<div class="cs-hero">
+  <div class="cs-hero-image">
+    <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0D1A0F"/>
+          <stop offset="100%" stop-color="#1C2E1A"/>
+        </linearGradient>
+        <linearGradient id="mtnL" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1A2B1C"/>
+          <stop offset="100%" stop-color="#0D0D0D"/>
+        </linearGradient>
+        <linearGradient id="mtnR" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#152015"/>
+          <stop offset="100%" stop-color="#0D0D0D"/>
+        </linearGradient>
+        <linearGradient id="snow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#C8B89A" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#C8B89A" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="boxTop1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2A3B2C"/>
+          <stop offset="100%" stop-color="#1A2B1C"/>
+        </linearGradient>
+        <linearGradient id="boxFace1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1E3020"/>
+          <stop offset="100%" stop-color="#162418"/>
+        </linearGradient>
+        <linearGradient id="boxSide1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#111A12"/>
+          <stop offset="100%" stop-color="#0D150E"/>
+        </linearGradient>
+        <linearGradient id="tagGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#C8B89A"/>
+          <stop offset="100%" stop-color="#A89878"/>
+        </linearGradient>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000" flood-opacity="0.6"/>
+        </filter>
+        <filter id="softglow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Sky -->
+      <rect width="1200" height="700" fill="url(#sky)"/>
+
+      <!-- Stars -->
+      <circle cx="120" cy="60" r="1" fill="#C8B89A" opacity="0.4"/>
+      <circle cx="280" cy="40" r="1.5" fill="#C8B89A" opacity="0.3"/>
+      <circle cx="450" cy="90" r="1" fill="#C8B89A" opacity="0.5"/>
+      <circle cx="680" cy="30" r="1" fill="#C8B89A" opacity="0.4"/>
+      <circle cx="820" cy="70" r="1.5" fill="#C8B89A" opacity="0.3"/>
+      <circle cx="950" cy="45" r="1" fill="#C8B89A" opacity="0.5"/>
+      <circle cx="1080" cy="80" r="1" fill="#C8B89A" opacity="0.3"/>
+      <circle cx="200" cy="110" r="1" fill="#C8B89A" opacity="0.25"/>
+      <circle cx="560" cy="55" r="1" fill="#C8B89A" opacity="0.35"/>
+      <circle cx="740" cy="100" r="1.5" fill="#C8B89A" opacity="0.2"/>
+
+      <!-- Far mountains -->
+      <polygon points="0,420 180,200 360,420" fill="#121F13" opacity="0.7"/>
+      <polygon points="200,420 420,160 640,420" fill="#152015" opacity="0.8"/>
+      <polygon points="560,420 800,140 1040,420" fill="#121F13" opacity="0.7"/>
+      <polygon points="800,420 1020,180 1200,380 1200,420" fill="#152015" opacity="0.8"/>
+
+      <!-- Snow caps -->
+      <polygon points="180,200 210,240 150,240" fill="url(#snow)" opacity="0.6"/>
+      <polygon points="420,160 460,210 380,210" fill="url(#snow)" opacity="0.7"/>
+      <polygon points="800,140 848,200 752,200" fill="url(#snow)" opacity="0.65"/>
+      <polygon points="1020,180 1055,225 985,225" fill="url(#snow)" opacity="0.55"/>
+
+      <!-- Ground / floor -->
+      <rect x="0" y="420" width="1200" height="280" fill="#0D0D0D"/>
+      <!-- Subtle surface lines -->
+      <line x1="0" y1="420" x2="1200" y2="420" stroke="#C8B89A" stroke-width="0.5" opacity="0.1"/>
+
+      <!-- ── PACKAGING GROUP (isometric-ish flatlay) ── -->
+      <g filter="url(#shadow)" transform="translate(600,380)">
+
+        <!-- Box 1 — large, centre-left -->
+        <!-- Top face -->
+        <polygon points="-180,-80 0,-140 0,-60 -180,0" fill="url(#boxTop1)"/>
+        <!-- Front face -->
+        <polygon points="-180,0 0,-60 0,100 -180,160" fill="url(#boxFace1)"/>
+        <!-- Right face -->
+        <polygon points="0,-60 160,-10 160,150 0,100" fill="url(#boxSide1)"/>
+        <!-- MW logo area on front -->
+        <polygon points="-160,20 -20,-30 -20,60 -160,110" fill="none" stroke="#C8B89A" stroke-width="0.8" opacity="0.3"/>
+        <!-- Text lines on front face -->
+        <line x1="-150" y1="40" x2="-40" y2="2" stroke="#C8B89A" stroke-width="1.5" opacity="0.5"/>
+        <line x1="-150" y1="56" x2="-80" y2="33" stroke="#C8B89A" stroke-width="0.8" opacity="0.25"/>
+        <line x1="-150" y1="68" x2="-60" y2="48" stroke="#C8B89A" stroke-width="0.8" opacity="0.2"/>
+        <!-- Mountain icon on front -->
+        <polygon points="-100,80 -70,40 -40,80" fill="none" stroke="#C8B89A" stroke-width="1" opacity="0.4"/>
+        <polygon points="-90,80 -70,52 -50,80" fill="#C8B89A" opacity="0.12"/>
+        <!-- Barcode lines on side -->
+        <line x1="20" y1="20" x2="20" y2="60" stroke="#C8B89A" stroke-width="2" opacity="0.15"/>
+        <line x1="25" y1="20" x2="25" y2="60" stroke="#C8B89A" stroke-width="1" opacity="0.15"/>
+        <line x1="29" y1="20" x2="29" y2="60" stroke="#C8B89A" stroke-width="3" opacity="0.15"/>
+        <line x1="34" y1="20" x2="34" y2="60" stroke="#C8B89A" stroke-width="1" opacity="0.15"/>
+        <line x1="38" y1="20" x2="38" y2="60" stroke="#C8B89A" stroke-width="2" opacity="0.15"/>
+
+        <!-- Box 2 — smaller, right -->
+        <polygon points="80,-50 200,-90 200,-30 80,-10" fill="#243524"/>
+        <polygon points="80,-10 200,-30 200,90 80,110" fill="#1A2A1A"/>
+        <polygon points="200,-30 300,0 300,120 200,90" fill="#111811"/>
+        <!-- Label on front of box 2 -->
+        <rect x="90" y="10" width="90" height="60" rx="2" fill="none" stroke="#C8B89A" stroke-width="0.6" opacity="0.25"/>
+        <line x1="100" y1="28" x2="168" y2="28" stroke="#C8B89A" stroke-width="1.2" opacity="0.4"/>
+        <line x1="100" y1="40" x2="150" y2="40" stroke="#C8B89A" stroke-width="0.7" opacity="0.2"/>
+        <line x1="100" y1="50" x2="158" y2="50" stroke="#C8B89A" stroke-width="0.7" opacity="0.2"/>
+
+        <!-- Box 3 — thin tall box, far right -->
+        <polygon points="280,-80 380,-110 380,-60 280,-30" fill="#2C3F2C"/>
+        <polygon points="280,-30 380,-60 380,130 280,160" fill="#1E2E1E"/>
+        <polygon points="380,-60 430,-40 430,150 380,130" fill="#141E14"/>
+        <!-- Stripe detail -->
+        <polygon points="280,20 380,-10 380,30 280,60" fill="#E8410A" opacity="0.35"/>
+        <line x1="290" y1="80" x2="368" y2="55" stroke="#C8B89A" stroke-width="1" opacity="0.3"/>
+        <line x1="290" y1="95" x2="350" y2="73" stroke="#C8B89A" stroke-width="0.7" opacity="0.2"/>
+
+      </g>
+
+      <!-- ── SWING TAG ── -->
+      <g transform="translate(490,310)" filter="url(#softglow)">
+        <!-- String -->
+        <path d="M 0,-40 Q 5,-20 2,0" stroke="#C8B89A" stroke-width="0.8" fill="none" opacity="0.5"/>
+        <!-- Tag body -->
+        <rect x="-22" y="0" width="44" height="62" rx="2" fill="url(#tagGrad)"/>
+        <circle cx="0" cy="6" r="3" fill="none" stroke="#0D0D0D" stroke-width="1.5"/>
+        <!-- Tag content -->
+        <line x1="-14" y1="18" x2="14" y2="18" stroke="#0D0D0D" stroke-width="1.5" opacity="0.5"/>
+        <line x1="-10" y1="26" x2="10" y2="26" stroke="#0D0D0D" stroke-width="0.8" opacity="0.35"/>
+        <!-- Mini mountain icon -->
+        <polygon points="0,38 -10,52 10,52" fill="none" stroke="#0D0D0D" stroke-width="1" opacity="0.4"/>
+        <line x1="-14" y1="56" x2="14" y2="56" stroke="#0D0D0D" stroke-width="0.6" opacity="0.2"/>
+      </g>
+
+      <!-- ── POLYBAG ── -->
+      <g transform="translate(720,470)" opacity="0.7">
+        <rect x="-50" y="-20" width="100" height="130" rx="4" fill="#1A2A1A" stroke="#C8B89A" stroke-width="0.5" opacity="0.8"/>
+        <rect x="-50" y="-20" width="100" height="28" rx="4" fill="#243524"/>
+        <line x1="-35" y1="-8" x2="35" y2="-8" stroke="#C8B89A" stroke-width="1" opacity="0.5"/>
+        <line x1="-28" y1="2" x2="28" y2="2" stroke="#C8B89A" stroke-width="0.7" opacity="0.3"/>
+        <!-- Garment outline inside bag -->
+        <path d="M -30,30 L -30,100 L 30,100 L 30,30 L 10,30 L 10,50 L -10,50 L -10,30 Z" fill="none" stroke="#C8B89A" stroke-width="0.5" opacity="0.2"/>
+      </g>
+
+      <!-- ── ORANGE ACCENT LINE ── -->
+      <rect x="0" y="696" width="1200" height="4" fill="#E8410A" opacity="0.6"/>
+
+      <!-- Subtle vignette -->
+      <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
+      </radialGradient>
+      <rect width="1200" height="700" fill="url(#vignette)"/>
+    </svg>
+  </div>
+  <div class="cs-hero-content">
+    <p class="cs-eyebrow">Packaging Design · Retail</p>
+    <h1 class="cs-title">Mountain Warehouse<br><em>Seasonal Packaging</em></h1>
+    <div class="cs-meta">
+      <div class="cs-meta-item">
+        <p class="cs-meta-label">Client</p>
+        <p class="cs-meta-value">Mountain Warehouse</p>
+      </div>
+      <div class="cs-meta-item">
+        <p class="cs-meta-label">Discipline</p>
+        <p class="cs-meta-value">Packaging Design</p>
+      </div>
+      <div class="cs-meta-item">
+        <p class="cs-meta-label">Sector</p>
+        <p class="cs-meta-value">Outdoor Retail</p>
+      </div>
+      <div class="cs-meta-item">
+        <p class="cs-meta-label">Role</p>
+        <p class="cs-meta-value">Senior Graphic Designer</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="cs-overview">
+  <p class="overview-label reveal">Overview</p>
+  <div class="overview-right">
+    <h2 class="overview-headline reveal">Packaging that <em>performs</em><br>as hard as the product inside.</h2>
+    <p class="overview-body reveal">Mountain Warehouse needed a cohesive seasonal packaging suite that could travel across a wide product range — from base layers and waterproofs to accessories and gifting lines — while holding together visually at shelf across hundreds of SKUs.</p>
+    <br>
+    <p class="overview-body reveal">The brief called for a system that felt premium enough to justify the price point, functional enough for logistics and retail compliance, and flexible enough to be adapted across seasons without a full redesign each time.</p>
+  </div>
+</div>
+
+<!-- DELIVERABLES -->
+<div class="cs-deliverables">
+  <div class="deliverable reveal">
+    <span class="deliverable-num">01</span>
+    <p class="deliverable-title">Packaging System</p>
+    <p class="deliverable-desc">Core template architecture covering boxes, swing tags, polybags, and header cards across the full product range.</p>
+  </div>
+  <div class="deliverable reveal">
+    <span class="deliverable-num">02</span>
+    <p class="deliverable-title">Seasonal Variants</p>
+    <p class="deliverable-desc">Colour-coded seasonal editions — Summer, Autumn/Winter, and Christmas gifting — built from the same modular system.</p>
+  </div>
+  <div class="deliverable reveal">
+    <span class="deliverable-num">03</span>
+    <p class="deliverable-title">Print-Ready Artwork</p>
+    <p class="deliverable-desc">Production-ready files for offset and digital print, with die-line specifications and supplier briefing notes.</p>
+  </div>
+  <div class="deliverable reveal">
+    <span class="deliverable-num">04</span>
+    <p class="deliverable-title">Brand Guidelines</p>
+    <p class="deliverable-desc">Packaging usage guidelines for in-house teams and third-party suppliers to maintain consistency across the range.</p>
+  </div>
+</div>
+
+<!-- KEY VISUALS -->
+<div class="cs-visuals">
+  <div class="visuals-header reveal">
+    <h2 class="visuals-title">Key <em>Visuals</em></h2>
+    <span class="visuals-count">3 Images</span>
+  </div>
+
+  <div class="visuals-grid">
+
+    <div class="visual-cell full reveal">
+      <svg viewBox="0 0 1400 560" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;object-fit:cover;">
+        <defs>
+          <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#111A0F"/>
+            <stop offset="100%" stop-color="#0D0D0D"/>
+          </linearGradient>
+          <linearGradient id="shelf" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1E1E1E"/>
+            <stop offset="100%" stop-color="#151515"/>
+          </linearGradient>
+        </defs>
+        <rect width="1400" height="560" fill="url(#bg1)"/>
+        <!-- Shelf surface -->
+        <rect x="60" y="380" width="1280" height="8" fill="#2A2A2A"/>
+        <rect x="60" y="388" width="1280" height="40" fill="#1A1A1A"/>
+
+        <!-- Box A -->
+        <g transform="translate(120,180)">
+          <rect width="140" height="200" rx="2" fill="#1E3020"/>
+          <rect y="0" width="140" height="50" fill="#243828"/>
+          <rect x="15" y="60" width="110" height="80" rx="1" fill="none" stroke="#C8B89A" stroke-width="0.8" opacity="0.3"/>
+          <line x1="25" y1="80" x2="115" y2="80" stroke="#C8B89A" stroke-width="1.5" opacity="0.55"/>
+          <line x1="25" y1="95" x2="90" y2="95" stroke="#C8B89A" stroke-width="0.8" opacity="0.3"/>
+          <polygon points="70,155 50,190 90,190" fill="none" stroke="#C8B89A" stroke-width="1" opacity="0.4"/>
+          <rect x="0" y="0" width="140" height="4" fill="#E8410A" opacity="0.6"/>
+        </g>
+
+        <!-- Box B -->
+        <g transform="translate(290,220)">
+          <rect width="120" height="160" rx="2" fill="#162418"/>
+          <rect y="0" width="120" height="40" fill="#1E3020"/>
+          <rect x="10" y="50" width="100" height="70" fill="none" stroke="#C8B89A" stroke-width="0.6" opacity="0.25"/>
+          <line x1="20" y1="68" x2="100" y2="68" stroke="#C8B89A" stroke-width="1.2" opacity="0.45"/>
+          <line x1="20" y1="82" x2="75" y2="82" stroke="#C8B89A" stroke-width="0.7" opacity="0.25"/>
+          <line x1="20" y1="93" x2="85" y2="93" stroke="#C8B89A" stroke-width="0.7" opacity="0.2"/>
+          <rect x="0" y="0" width="120" height="4" fill="#C8B89A" opacity="0.4"/>
+        </g>
+
+        <!-- Box C — wide -->
+        <g transform="translate(440,160)">
+          <rect width="200" height="220" rx="2" fill="#1A2B1C"/>
+          <rect y="0" width="200" height="60" fill="#243828"/>
+          <line x1="20" y1="28" x2="180" y2="28" stroke="#C8B89A" stroke-width="2" opacity="0.6"/>
+          <line x1="20" y1="44" x2="130" y2="44" stroke="#C8B89A" stroke-width="0.8" opacity="0.3"/>
+          <rect x="20" y="75" width="160" height="100" rx="1" fill="none" stroke="#C8B89A" stroke-width="0.7" opacity="0.2"/>
+          <!-- Mountain -->
+          <polygon points="100,100 60,155 140,155" fill="none" stroke="#C8B89A" stroke-width="1.2" opacity="0.45"/>
+          <polygon points="100,120 80,155 120,155" fill="#C8B89A" opacity="0.1"/>
+          <rect x="20" y="185" width="160" height="20" fill="#E8410A" opacity="0.3"/>
+          <line x1="30" y1="194" x2="170" y2="194" stroke="#E8410A" stroke-width="1" opacity="0.6"/>
+        </g>
+
+        <!-- Box D — tall slim -->
+        <g transform="translate(670,140)">
+          <rect width="100" height="240" rx="2" fill="#243020"/>
+          <rect y="0" width="100" height="44" fill="#2C3A28"/>
+          <rect y="44" width="100" height="8" fill="#E8410A" opacity="0.5"/>
+          <line x1="15" y1="68" x2="85" y2="68" stroke="#C8B89A" stroke-width="1.5" opacity="0.5"/>
+          <line x1="15" y1="82" x2="65" y2="82" stroke="#C8B89A" stroke-width="0.7" opacity="0.25"/>
+          <rect x="15" y="100" width="70" height="90" rx="1" fill="none" stroke="#C8B89A" stroke-width="0.6" opacity="0.2"/>
+          <polygon points="50,120 30,175 70,175" fill="none" stroke="#C8B89A" stroke-width="1" opacity="0.35"/>
+        </g>
+
+        <!-- Box E -->
+        <g transform="translate(800,200)">
+          <rect width="160" height="180" rx="2" fill="#152015"/>
+          <rect y="0" width="160" height="48" fill="#1E2E1E"/>
+          <line x1="18" y1="22" x2="142" y2="22" stroke="#C8B89A" stroke-width="1.8" opacity="0.5"/>
+          <line x1="18" y1="36" x2="100" y2="36" stroke="#C8B89A" stroke-width="0.8" opacity="0.25"/>
+          <rect x="18" y="60" width="124" height="80" rx="1" fill="none" stroke="#C8B89A" stroke-width="0.6" opacity="0.2"/>
+          <polygon points="80,78 55,125 105,125" fill="none" stroke="#C8B89A" stroke-width="1" opacity="0.38"/>
+          <rect x="0" y="172" width="160" height="8" fill="#C8B89A" opacity="0.15"/>
+        </g>
+
+        <!-- Box F -->
+        <g transform="translate(990,230)">
+          <rect width="130" height="150" rx="2" fill="#1C2E1E"/>
+          <rect y="0" width="130" height="40" fill="#243824"/>
+          <rect y="40" width="130" height="6" fill="#E8410A" opacity="0.45"/>
+          <line x1="15" y1="60" x2="115" y2="60" stroke="#C8B89A" stroke-width="1.2" opacity="0.45"/>
+          <line x1="15" y1="74" x2="80" y2="74" stroke="#C8B89A" stroke-width="0.7" opacity="0.22"/>
+          <polygon points="65,100 45,138 85,138" fill="none" stroke="#C8B89A" stroke-width="1" opacity="0.35"/>
+        </g>
+
+        <!-- Box G — wide gift box -->
+        <g transform="translate(1150,200)">
+          <rect width="180" height="180" rx="2" fill="#1A281A"/>
+          <rect y="0" width="180" height="52" fill="#223022"/>
+          <line x1="90" y1="0" x2="90" y2="52" stroke="#C8B89A" stroke-width="0.5" opacity="0.2"/>
+          <!-- Ribbon -->
+          <line x1="90" y1="0" x2="90" y2="180" stroke="#E8410A" stroke-width="2" opacity="0.4"/>
+          <line x1="0" y1="90" x2="180" y2="90" stroke="#E8410A" stroke-width="2" opacity="0.4"/>
+          <circle cx="90" cy="90" r="12" fill="none" stroke="#E8410A" stroke-width="1.5" opacity="0.4"/>
+          <line x1="20" y1="65" x2="160" y2="65" stroke="#C8B89A" stroke-width="0.6" opacity="0.2"/>
+          <line x1="20" y1="120" x2="160" y2="120" stroke="#C8B89A" stroke-width="0.6" opacity="0.2"/>
+        </g>
+
+        <!-- Swing tags scattered -->
+        <g transform="translate(220,150)" opacity="0.8">
+          <path d="M0,-20 Q3,-10 1,0" stroke="#C8B89A" stroke-width="0.8" fill="none"/>
+          <rect x="-14" y="0" width="28" height="40" rx="1" fill="#C8B89A"/>
+          <circle cx="0" cy="4" r="2" fill="#1A2B1C"/>
+          <line x1="-9" y1="14" x2="9" y2="14" stroke="#1A2B1C" stroke-width="1.2" opacity="0.5"/>
+          <line x1="-6" y1="22" x2="6" y2="22" stroke="#1A2B1C" stroke-width="0.7" opacity="0.35"/>
+        </g>
+
+        <g transform="translate(560,120)" opacity="0.7">
+          <path d="M0,-18 Q4,-8 1,0" stroke="#C8B89A" stroke-width="0.8" fill="none"/>
+          <rect x="-13" y="0" width="26" height="36" rx="1" fill="#A89878"/>
+          <circle cx="0" cy="4" r="2" fill="#1A2B1C"/>
+          <line x1="-8" y1="13" x2="8" y2="13" stroke="#1A2B1C" stroke-width="1" opacity="0.45"/>
+        </g>
+
+        <!-- Brand watermark text -->
+        <text x="700" y="510" font-family="serif" font-size="11" fill="#C8B89A" opacity="0.18" text-anchor="middle" letter-spacing="6">MOUNTAIN WAREHOUSE · SEASONAL RANGE · PACKAGING SYSTEM</text>
+
+        <!-- Vignette -->
+        <radialGradient id="vig1" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+        </radialGradient>
+        <rect width="1400" height="560" fill="url(#vig1)"/>
+      </svg>
+      <div class="visual-caption">
+        <span class="caption-text">Seasonal range overview — full product suite</span>
+        <span class="caption-tag">Hero Visual</span>
+      </div>
+    </div>
+
+    <div class="visual-cell half reveal">
+      <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;object-fit:cover;">
+        <defs>
+          <linearGradient id="tagBg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D4C4A4"/>
+            <stop offset="100%" stop-color="#B8A882"/>
+          </linearGradient>
+          <linearGradient id="foilLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#C8B89A"/>
+            <stop offset="30%" stop-color="#F0E4C8"/>
+            <stop offset="60%" stop-color="#C8B89A"/>
+            <stop offset="100%" stop-color="#A89070"/>
+          </linearGradient>
+          <filter id="tagShadow">
+            <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#000" flood-opacity="0.5"/>
+          </filter>
+          <filter id="foilGlow">
+            <feGaussianBlur stdDeviation="1.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Dark background -->
+        <rect width="800" height="480" fill="#0F1A10"/>
+        <!-- Subtle texture lines -->
+        <line x1="0" y1="160" x2="800" y2="160" stroke="#C8B89A" stroke-width="0.3" opacity="0.06"/>
+        <line x1="0" y1="320" x2="800" y2="320" stroke="#C8B89A" stroke-width="0.3" opacity="0.06"/>
+
+        <!-- String -->
+        <path d="M 400,40 Q 408,100 402,148" stroke="#8A7A60" stroke-width="1.5" fill="none"/>
+
+        <!-- Main swing tag — large, centre -->
+        <g transform="translate(310,148)" filter="url(#tagShadow)">
+          <rect width="180" height="240" rx="4" fill="url(#tagBg)"/>
+          <!-- Hole -->
+          <circle cx="90" cy="16" r="6" fill="#0F1A10"/>
+          <circle cx="90" cy="16" r="4.5" fill="none" stroke="#8A7A60" stroke-width="1"/>
+          <!-- Foil brand name -->
+          <g filter="url(#foilGlow)">
+            <line x1="24" y1="52" x2="156" y2="52" stroke="url(#foilLine)" stroke-width="2.5"/>
+          </g>
+          <text x="90" y="48" font-family="Georgia, serif" font-size="13" fill="#1A2B1C" text-anchor="middle" letter-spacing="3" font-weight="bold" opacity="0.75">MOUNTAIN</text>
+          <text x="90" y="66" font-family="Georgia, serif" font-size="9" fill="#1A2B1C" text-anchor="middle" letter-spacing="5" opacity="0.55">WAREHOUSE</text>
+          <!-- Foil line under name -->
+          <g filter="url(#foilGlow)">
+            <line x1="24" y1="72" x2="156" y2="72" stroke="url(#foilLine)" stroke-width="1"/>
+          </g>
+
+          <!-- Mountain icon — foil -->
+          <g filter="url(#foilGlow)">
+            <polygon points="90,90 58,138 122,138" fill="none" stroke="url(#foilLine)" stroke-width="1.8"/>
+            <polygon points="90,108 72,138 108,138" fill="#C8B89A" opacity="0.2"/>
+            <!-- Snow cap -->
+            <polygon points="90,90 78,106 102,106" fill="#E8E0D0" opacity="0.6"/>
+          </g>
+
+          <!-- Product info lines -->
+          <line x1="24" y1="158" x2="156" y2="158" stroke="#1A2B1C" stroke-width="0.6" opacity="0.25"/>
+          <text x="90" y="174" font-family="Arial, sans-serif" font-size="8" fill="#1A2B1C" text-anchor="middle" letter-spacing="1.5" opacity="0.6">WATERPROOF JACKET</text>
+          <text x="90" y="188" font-family="Arial, sans-serif" font-size="7" fill="#1A2B1C" text-anchor="middle" opacity="0.4">Style No. MW-AW24-0142</text>
+
+          <!-- Size / price area -->
+          <rect x="24" y="198" width="132" height="30" rx="2" fill="#1A2B1C" opacity="0.12"/>
+          <text x="60" y="218" font-family="Arial, sans-serif" font-size="9" fill="#1A2B1C" text-anchor="middle" opacity="0.6">SIZE: M</text>
+          <line x1="90" y1="200" x2="90" y2="228" stroke="#1A2B1C" stroke-width="0.5" opacity="0.2"/>
+          <text x="122" y="218" font-family="Arial, sans-serif" font-size="9" fill="#1A2B1C" text-anchor="middle" opacity="0.6">£89.99</text>
+        </g>
+
+        <!-- Second smaller tag, slightly behind -->
+        <g transform="translate(240,180)" opacity="0.6">
+          <rect width="130" height="180" rx="3" fill="#B8A882"/>
+          <circle cx="65" cy="12" r="5" fill="#0F1A10"/>
+          <text x="65" y="44" font-family="Georgia, serif" font-size="10" fill="#1A2B1C" text-anchor="middle" letter-spacing="2" opacity="0.7">MOUNTAIN</text>
+          <text x="65" y="57" font-family="Georgia, serif" font-size="7" fill="#1A2B1C" text-anchor="middle" letter-spacing="3.5" opacity="0.5">WAREHOUSE</text>
+          <polygon points="65,76 46,108 84,108" fill="none" stroke="#1A2B1C" stroke-width="1" opacity="0.35"/>
+        </g>
+
+        <!-- Third tag, far side -->
+        <g transform="translate(480,200)" opacity="0.45">
+          <rect width="110" height="160" rx="3" fill="#A89060"/>
+          <circle cx="55" cy="12" r="4" fill="#0F1A10"/>
+          <polygon points="55,60 36,96 74,96" fill="none" stroke="#1A2B1C" stroke-width="1" opacity="0.4"/>
+        </g>
+
+        <!-- Foil shimmer accent lines in bg -->
+        <line x1="0" y1="420" x2="800" y2="420" stroke="url(#foilLine)" stroke-width="0.5" opacity="0.15"/>
+
+        <!-- Label -->
+        <text x="400" y="460" font-family="sans-serif" font-size="10" fill="#C8B89A" opacity="0.2" text-anchor="middle" letter-spacing="4">SWING TAG DETAIL · FOIL FINISH</text>
+
+        <radialGradient id="vig2" cx="50%" cy="50%" r="65%">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+        </radialGradient>
+        <rect width="800" height="480" fill="url(#vig2)"/>
+      </svg>
+      <div class="visual-caption">
+        <span class="caption-text">Swing tag detail — foil finish</span>
+        <span class="caption-tag">Detail</span>
+      </div>
+    </div>
+
+    <div class="visual-cell half reveal">
+      <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0;object-fit:cover;">
+        <defs>
+          <linearGradient id="varBg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0D0D0D"/>
+            <stop offset="100%" stop-color="#121A12"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="480" fill="url(#varBg)"/>
+
+        <!-- Grid guide lines -->
+        <line x1="0" y1="240" x2="800" y2="240" stroke="#C8B89A" stroke-width="0.3" opacity="0.08"/>
+        <line x1="400" y1="0" x2="400" y2="480" stroke="#C8B89A" stroke-width="0.3" opacity="0.08"/>
+
+        <!-- VARIANT 1 — Forest Green (top left) -->
+        <g transform="translate(60,50)">
+          <rect width="130" height="170" rx="2" fill="#1E3020"/>
+          <rect y="0" width="130" height="44" fill="#243828"/>
+          <rect y="44" width="130" height="5" fill="#E8410A" opacity="0.6"/>
+          <line x1="14" y1="22" x2="116" y2="22" stroke="#C8B89A" stroke-width="1.8" opacity="0.6"/>
+          <line x1="14" y1="34" x2="80" y2="34" stroke="#C8B89A" stroke-width="0.8" opacity="0.3"/>
+          <polygon points="65,90 42,135 88,135" fill="none" stroke="#C8B89A" stroke-width="1.2" opacity="0.45"/>
+          <polygon points="65,108 52,135 78,135" fill="#C8B89A" opacity="0.1"/>
+          <rect x="14" y="148" width="102" height="14" fill="none" stroke="#C8B89A" stroke-width="0.5" opacity="0.2"/>
+          <!-- Colour swatch dot -->
+          <circle cx="65" cy="195" r="10" fill="#1E3020" stroke="#C8B89A" stroke-width="1" opacity="0.6"/>
+          <text x="65" y="215" font-family="sans-serif" font-size="9" fill="#C8B89A" text-anchor="middle" opacity="0.45" letter-spacing="1">Forest</text>
+        </g>
+
+        <!-- VARIANT 2 — Slate Blue (top centre-left) -->
+        <g transform="translate(220,50)">
+          <rect width="130" height="170" rx="2" fill="#1A2030"/>
+          <rect y="0" width="130" height="44" fill="#222840"/>
+          <rect y="44" width="130" height="5" fill="#C8B89A" opacity="0.5"/>
+          <line x1="14" y1="22" x2="116" y2="22" stroke="#C8B89A" stroke-width="1.8" opacity="0.6"/>
+          <line x1="14" y1="34" x2="80" y2="34" stroke="#C8B89A" stroke-width="0.8" opacity="0.3"/>
+          <polygon points="65,90 42,135 88,135" fill="none" stroke="#C8B89A" stroke-width="1.2" opacity="0.45"/>
+          <polygon points="65,108 52,135 78,135" fill="#C8B89A" opacity="0.1"/>
+          <rect x="14" y="148" width="102" height="14" fill="none" stroke="#C8B89A" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="65" cy="195" r="10" fill="#1A2030" stroke="#C8B89A" stroke-width="1" opacity="0.6"/>
+          <text x="65" y="215" font-family="sans-serif" font-size="9" fill="#C8B89A" text-anchor="middle" opacity="0.45" letter-spacing="1">Slate</text>
+        </g>
+
+        <!-- VARIANT 3 — Ember / Burnt Orange (top centre-right) -->
+        <g transform="translate(380,50)">
+          <rect width="130" height="170" rx="2" fill="#2A1810"/>
+          <rect y="0" width="130" height="44" fill="#361E14"/>
+          <rect y="44" width="130" height="5" fill="#E8410A" opacity="0.8"/>
+          <line x1="14" y1="22" x2="116" y2="22" stroke="#C8B89A" stroke-width="1.8" opacity="0.6"/>
+          <line x1="14" y1="34" x2="80" y2="34" stroke="#C8B89A" stroke-width="0.8" opacity="0.3"/>
+          <polygon points="65,90 42,135 88,135" fill="none" stroke="#E8410A" stroke-width="1.2" opacity="0.45"/>
+          <polygon points="65,108 52,135 78,135" fill="#E8410A" opacity="0.1"/>
+          <rect x="14" y="148" width="102" height="14" fill="none" stroke="#E8410A" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="65" cy="195" r="10" fill="#E8410A" stroke="#C8B89A" stroke-width="1" opacity="0.6"/>
+          <text x="65" y="215" font-family="sans-serif" font-size="9" fill="#C8B89A" text-anchor="middle" opacity="0.45" letter-spacing="1">Ember</text>
+        </g>
+
+        <!-- VARIANT 4 — Charcoal (top right) -->
+        <g transform="translate(540,50)">
+          <rect width="130" height="170" rx="2" fill="#1E1E1E"/>
+          <rect y="0" width="130" height="44" fill="#282828"/>
+          <rect y="44" width="130" height="5" fill="#C8B89A" opacity="0.35"/>
+          <line x1="14" y1="22" x2="116" y2="22" stroke="#C8B89A" stroke-width="1.8" opacity="0.6"/>
+          <line x1="14" y1="34" x2="80" y2="34" stroke="#C8B89A" stroke-width="0.8" opacity="0.3"/>
+          <polygon points="65,90 42,135 88,135" fill="none" stroke="#C8B89A" stroke-width="1.2" opacity="0.35"/>
+          <polygon points="65,108 52,135 78,135" fill="#C8B89A" opacity="0.08"/>
+          <rect x="14" y="148" width="102" height="14" fill="none" stroke="#C8B89A" stroke-width="0.5" opacity="0.15"/>
+          <circle cx="65" cy="195" r="10" fill="#2A2A2A" stroke="#C8B89A" stroke-width="1" opacity="0.6"/>
+          <text x="65" y="215" font-family="sans-serif" font-size="9" fill="#C8B89A" text-anchor="middle" opacity="0.45" letter-spacing="1">Carbon</text>
+        </g>
+
+        <!-- Divider line -->
+        <line x1="40" y1="240" x2="760" y2="240" stroke="#C8B89A" stroke-width="0.5" opacity="0.12"/>
+
+        <!-- Bottom row — colour palette swatches with labels -->
+        <text x="400" y="278" font-family="sans-serif" font-size="9" fill="#C8B89A" text-anchor="middle" opacity="0.3" letter-spacing="4">A/W 2024 COLOUR PALETTE</text>
+
+        <!-- Swatch row -->
+        <g transform="translate(100,295)">
+          <!-- Swatch 1 -->
+          <rect x="0" y="0" width="80" height="80" rx="2" fill="#1E3020"/>
+          <line x1="0" y1="80" x2="80" y2="80" stroke="#C8B89A" stroke-width="0.5" opacity="0.2"/>
+          <text x="40" y="98" font-family="sans-serif" font-size="8" fill="#C8B89A" text-anchor="middle" opacity="0.4">#1E3020</text>
+          <text x="40" y="110" font-family="sans-serif" font-size="7" fill="#C8B89A" text-anchor="middle" opacity="0.28">Forest</text>
+          <!-- Swatch 2 -->
+          <rect x="110" y="0" width="80" height="80" rx="2" fill="#1A2030"/>
+          <text x="150" y="98" font-family="sans-serif" font-size="8" fill="#C8B89A" text-anchor="middle" opacity="0.4">#1A2030</text>
+          <text x="150" y="110" font-family="sans-serif" font-size="7" fill="#C8B89A" text-anchor="middle" opacity="0.28">Slate</text>
+          <!-- Swatch 3 -->
+          <rect x="220" y="0" width="80" height="80" rx="2" fill="#E8410A"/>
+          <text x="260" y="98" font-family="sans-serif" font-size="8" fill="#C8B89A" text-anchor="middle" opacity="0.4">#E8410A</text>
+          <text x="260" y="110" font-family="sans-serif" font-size="7" fill="#C8B89A" text-anchor="middle" opacity="0.28">Ember</text>
+          <!-- Swatch 4 -->
+          <rect x="330" y="0" width="80" height="80" rx="2" fill="#282828"/>
+          <text x="370" y="98" font-family="sans-serif" font-size="8" fill="#C8B89A" text-anchor="middle" opacity="0.4">#282828</text>
+          <text x="370" y="110" font-family="sans-serif" font-size="7" fill="#C8B89A" text-anchor="middle" opacity="0.28">Carbon</text>
+          <!-- Swatch 5 -->
+          <rect x="440" y="0" width="80" height="80" rx="2" fill="#C8B89A"/>
+          <text x="480" y="98" font-family="sans-serif" font-size="8" fill="#C8B89A" text-anchor="middle" opacity="0.4">#C8B89A</text>
+          <text x="480" y="110" font-family="sans-serif" font-size="7" fill="#C8B89A" text-anchor="middle" opacity="0.28">Kraft</text>
+        </g>
+
+        <!-- Caption line -->
+        <text x="400" y="462" font-family="sans-serif" font-size="10" fill="#C8B89A" opacity="0.18" text-anchor="middle" letter-spacing="4">SEASONAL COLOUR VARIANTS · A/W EDITION</text>
+
+        <radialGradient id="vig3" cx="50%" cy="50%" r="65%">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+        </radialGradient>
+        <rect width="800" height="480" fill="url(#vig3)"/>
+      </svg>
+      <div class="visual-caption">
+        <span class="caption-text">Seasonal colour variants — A/W edition</span>
+        <span class="caption-tag">Range</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- OUTCOME -->
+<div class="cs-outcome">
+  <blockquote class="outcome-quote reveal">
+    "A system built to scale — consistent across hundreds of SKUs without losing its character at shelf."
+  </blockquote>
+  <div class="outcome-right">
+    <p class="outcome-label">Outcome</p>
+    <p class="outcome-body reveal">The final packaging system was rolled out across the full seasonal range and adopted as the foundation for subsequent seasonal updates. The modular structure reduced artwork production time on seasonal variants and gave the in-house team a clear framework to brief suppliers independently.</p>
+    <div class="outcome-tags reveal">
+      <span class="outcome-tag">Print Production</span>
+      <span class="outcome-tag">Retail Packaging</span>
+      <span class="outcome-tag">Brand Systems</span>
+      <span class="outcome-tag">Seasonal Design</span>
+    </div>
+  </div>
+</div>
+
+<!-- NEXT PROJECT -->
+<a class="cs-next" href="#">
+  <div>
+    <p class="next-label">Next Project</p>
+    <h3 class="next-title">Selfridges — <em>In-Store Campaign</em></h3>
+  </div>
+  <span class="next-arrow">→</span>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Manish Patel</p>
+  <p>Senior Graphic Designer · London</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
